@@ -15,8 +15,8 @@ import (
 	"github.com/go-git/go-git/v5/config"
 	"github.com/go-git/go-git/v5/plumbing/object"
 
-	"github.com/aoepeople/semanticore/internal"
-	"github.com/aoepeople/semanticore/internal/hook"
+	"github.com/davidmcgregor/semanticore/internal"
+	"github.com/davidmcgregor/semanticore/internal/hook"
 )
 
 func try(err error) {
