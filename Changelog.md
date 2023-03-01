@@ -1,5 +1,21 @@
 # Changelog
 
+## Version v0.5.2 (2023-03-01)
+
+### Fixes
+
+- **deps:** update module github.com/go-git/go-git/v5 to v5.5.2 (701140f0)
+- **deps:** update module github.com/go-git/go-git/v5 to v5.5.0 (cfd9217e)
+
+### Ops and CI/CD
+
+- **github:** remove matrix strategy (3fbb0b15)
+
+### Chores and tidying
+
+- Update semanticore.yml (885da901)
+- Update Readme.md (27cc0a17)
+
 ## Version v0.5.1 (2022-11-22)
 
 ### Fixes
