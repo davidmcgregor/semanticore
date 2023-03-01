@@ -1,4 +1,4 @@
-module github.com/aoepeople/semanticore
+module github.com/davidmcgregor/semanticore
 
 go 1.19
 
