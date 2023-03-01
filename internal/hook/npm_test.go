@@ -12,7 +12,7 @@ import (
 	"github.com/go-git/go-git/v5/storage/memory"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/aoepeople/semanticore/internal"
+	"github.com/davidmcgregor/semanticore/internal"
 )
 
 func TestNpmUpdateVersionHook(t *testing.T) {
