@@ -10,7 +10,7 @@ import (
 
 	"github.com/go-git/go-git/v5"
 
-	"github.com/aoepeople/semanticore/internal"
+	"github.com/davidmcgregor/semanticore/internal"
 )
 
 var packagejson string
