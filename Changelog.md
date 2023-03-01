@@ -1,5 +1,14 @@
 # Changelog
 
+## Version v0.5.3 (2023-03-01)
+
+### Chores and tidying
+
+- Update npm_test.go (4bfa9ed1)
+- Update npm.go (170760ea)
+- Update main.go (f76a4be5)
+- Update go.mod (c7d201be)
+
 ## Version v0.5.2 (2023-03-01)
 
 ### Fixes
