@@ -8,7 +8,7 @@ Your friendly Semanticore Release bot helps maintaining the changelog for a proj
 
 Semanticore runs along every pipeline in the main branch, and will analyze the commit messages.
 
-It maintains an open Merge Request for the project with all the required Changelog adjustments.
+It maintains an open Merge Request for the project with all the required Changelog adjustments..
 
 It detects the current version and suggests the next version based on the changes made.
 
