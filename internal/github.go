@@ -125,6 +125,10 @@ func (github Github) MergeRequest(target, title, description, labels string) err
 	return github.request(http.MethodPost, "/pulls", http.StatusCreated, data, nil)
 }
 
+func (github Github) Commit(commit Commit) error {
+	return github.request(http.MethodPost, fmt.Sprintf("projects/%s/repository/commits", ""), http.StatusCreated, nil, nil)
+}
+
 type githubReleaseBody struct {
 	TagName              string `json:"tag_name"`
 	TargetCommitish      string `json:"target_commitish"`

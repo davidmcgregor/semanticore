@@ -28,6 +28,7 @@ func (b *testBackend) Release(tag, ref, changelog string) error {
 func (*testBackend) MergeRequest(target, title, description, labels string) error { return nil }
 func (*testBackend) CloseMergeRequest() error                                     { return nil }
 func (*testBackend) MainBranch() (string, error)                                  { return "main", nil }
+func (*testBackend) Commit(Commit) error									 	  { return nil }
 
 func TestReadRepository(t *testing.T) {
 	mockRepo, err := git.Init(memory.NewStorage(), memfs.New())

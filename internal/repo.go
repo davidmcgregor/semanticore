@@ -40,6 +40,18 @@ type Repository struct {
 	unreleasedChangelog string
 }
 
+type CommitAction struct {
+	Action string
+	Filepath string
+	Content []byte
+}
+
+type Commit struct {
+	Branch string
+	Commit_message string
+	Actions []CommitAction
+}
+
 func ReadRepository(repo *git.Repository, createMajor bool) (*Repository, error) {
 	repository := &Repository{
 		VPrefix: "v",

@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -16,6 +17,8 @@ type Gitlab struct {
 	token  string
 	repo   string
 }
+
+
 
 var _ Backend = Gitlab{}
 
@@ -112,6 +115,13 @@ func (gitlab Gitlab) MergeRequest(target, title, description, labels string) err
 		return gitlab.request(http.MethodPut, fmt.Sprintf("projects/%s/merge_requests/%d", url.PathEscape(gitlab.repo), iid), http.StatusOK, strings.NewReader(data.Encode()), nil)
 	}
 	return gitlab.request(http.MethodPost, fmt.Sprintf("projects/%s/merge_requests", url.PathEscape(gitlab.repo)), http.StatusCreated, strings.NewReader(data.Encode()), nil)
+}
+
+func (gitlab Gitlab) Commit(commit Commit) error {
+	b, err := json.Marshal(commit)
+	c := bytes.NewBuffer(b)
+	
+	return gitlab.request(http.MethodPost, fmt.Sprintf("projects/%s/repository/commits", url.PathEscape(gitlab.repo)), http.StatusCreated, c, nil)
 }
 
 func (gitlab Gitlab) Release(tag, ref, changelog string) error {

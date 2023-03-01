@@ -10,4 +10,5 @@ type Backend interface {
 	MergeRequest(target, title, description, labels string) error
 	CloseMergeRequest() error
 	MainBranch() (string, error)
+	Commit(commit Commit) error
 }

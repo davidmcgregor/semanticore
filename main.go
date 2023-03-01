@@ -9,11 +9,11 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-	"time"
+	// "time"
 
 	"github.com/go-git/go-git/v5"
-	"github.com/go-git/go-git/v5/config"
-	"github.com/go-git/go-git/v5/plumbing/object"
+	// "github.com/go-git/go-git/v5/config"
+	// "github.com/go-git/go-git/v5/plumbing/object"
 
 	"github.com/davidmcgregor/semanticore/internal"
 	"github.com/davidmcgregor/semanticore/internal/hook"
@@ -62,8 +62,8 @@ func main() {
 		backend = internal.NewGitlabBackend(os.Getenv("SEMANTICORE_TOKEN"), remoteUrl.Host, repoId)
 	}
 
-	head, err := repo.Head()
-	try(err)
+	// head, err := repo.Head()
+	// try(err)
 
 	repository, err := internal.ReadRepository(repo, *createMajor)
 	try(err)
@@ -114,38 +114,49 @@ func main() {
 
 	hook.NpmUpdateVersionHook(wt, repository)
 
-	commit, err := wt.Commit(fmt.Sprintf("Release %s%d.%d.%d", repository.VPrefix, repository.Major, repository.Minor, repository.Patch), &git.CommitOptions{
-		Author: &object.Signature{
-			Name:  *authorName,
-			Email: *authorEmail,
-			When:  time.Now(),
+	commit := internal.Commit{
+		Branch: "",
+		Commit_message: "",
+		Actions: []internal.CommitAction{
+			{ Action: "create", Filepath: "Changelog.md", Content: []byte(changelog)},
+			{ Action: "create", Filepath: "package.json", Content: []byte{}},
 		},
-		Committer: &object.Signature{
-			Name:  *committerName,
-			Email: *committerEmail,
-			When:  time.Now(),
-		},
-	})
-	try(err)
-
-	log.Printf("[semanticore] committed changelog: %s", commit.String())
-
-	try(wt.Reset(&git.ResetOptions{
-		Commit: head.Hash(),
-		Mode:   git.HardReset,
-	}))
-
-	if backend == nil {
-		log.Printf("no backend configured, keeping changes in a local commit: %s", commit.String())
-		return
 	}
-	try(repo.Push(&git.PushOptions{
-		RemoteName: "origin",
-		RefSpecs:   []config.RefSpec{config.RefSpec(commit.String() + ":refs/heads/semanticore/release")},
-		Force:      true,
-		Auth:       backend,
-		Progress:   os.Stdout,
-	}))
+
+	backend.Commit(commit)
+
+	// commit, err := wt.Commit(fmt.Sprintf("Release %s%d.%d.%d", repository.VPrefix, repository.Major, repository.Minor, repository.Patch), &git.CommitOptions{
+	// 	Author: &object.Signature{
+	// 		Name:  *authorName,
+	// 		Email: *authorEmail,
+	// 		When:  time.Now(),
+	// 	},
+	// 	Committer: &object.Signature{
+	// 		Name:  *committerName,
+	// 		Email: *committerEmail,
+	// 		When:  time.Now(),
+	// 	},
+	// })
+	// try(err)
+
+	// log.Printf("[semanticore] committed changelog: %s", changelog.String())
+
+	// try(wt.Reset(&git.ResetOptions{
+	// 	Commit: head.Hash(),
+	// 	Mode:   git.HardReset,
+	// }))
+
+	// if backend == nil {
+	// 	log.Printf("no backend configured, keeping changes in a local commit: %s", commit.String())
+	// 	return
+	// }
+	// try(repo.Push(&git.PushOptions{
+	// 	RemoteName: "origin",
+	// 	RefSpecs:   []config.RefSpec{config.RefSpec(commit.String() + ":refs/heads/semanticore/release")},
+	// 	Force:      true,
+	// 	Auth:       backend,
+	// 	Progress:   os.Stdout,
+	// }))
 
 	releasetype := "patch 🩹"
 	if repository.Breaking && *createMajor {
